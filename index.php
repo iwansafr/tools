@@ -37,6 +37,7 @@
 	          <a href="<?php echo site_url().'?mode=generate_user' ?>" class="list-group-item">Generate User</a>
 	          <a href="<?php echo site_url().'?mode=filter' ?>" class="list-group-item">Filter</a>
 	          <a href="<?php echo site_url().'?mode=copy' ?>" class="list-group-item">copy</a>
+	          <a href="invoice.html" class="list-group-item">invoice</a>
 	        </div>
 				</div>
 				<div class="col-md-10">
