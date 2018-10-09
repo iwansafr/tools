@@ -37,12 +37,15 @@
 	          <a href="<?php echo site_url().'?mode=generate_user' ?>" class="list-group-item">Generate User</a>
 	          <a href="<?php echo site_url().'?mode=filter' ?>" class="list-group-item">Filter</a>
 	          <a href="<?php echo site_url().'?mode=copy' ?>" class="list-group-item">copy</a>
-	          <a href="invoice.html" class="list-group-item">invoice</a>
+	          <a href="<?php echo site_url().'?mode=invoice' ?>" class="list-group-item">invoice</a>
 	        </div>
 				</div>
 				<div class="col-md-10">
-						<?php $code = @$_POST['code']; ?>
-						<form method="post" action="">
+						<?php
+						$code = @$_POST['code'];
+						$action = (@$_GET['mode'] == 'invoice') ? 'invoice.html.php' : '';
+						?>
+						<form method="post" action="<?php echo $action ?>">
 							<div class="scroller">
 								<?php
 								$textarea = TRUE;
@@ -90,6 +93,29 @@
 										</div>
 									</div>
 									<div class="clearfix"></div>
+									<?php
+								}else if(@$_GET['mode'] == 'invoice')
+								{
+									?>
+									<div class="col-md-12">
+										<label>invoice To</label>
+										<textarea required="" class="form-control" name="invoice_to" rows="4" ></textarea>
+										<label>payment method</label>
+										<select class="form-control" name="payment_method">
+											<option value="Transfer Bank BCA">Transfer Bank BCA</option>
+											<option value="cash">Cash</option>
+										</select>
+										<label>notes</label>
+										<textarea required="" class="form-control" name="notes" rows="4" ></textarea>
+										<label>Item</label>
+										<textarea required="" class="form-control" name="items" rows="4"  placeholder="kode unik = 120, domain = 120000"></textarea>
+										<label>Status</label>
+										<select class="form-control" name="status">
+											<option value="PAID">PAID</option>
+											<option value="UNPAID">UNPAID</option>
+										</select>
+										<br>
+									</div>
 									<?php
 								}else{
 									if(@$_GET['mode'] == 'generate_user')
@@ -147,12 +173,17 @@
 									case 'generate_user':
 										$mode = 'generate_user';
 										break;
+									case 'invoice':
+										$mode = 'invoice';
+										break;
 									default:
 										$mode = 'php';
 										break;
 								}
-
-								include 'mode/'.$mode.'.php';
+								if($mode != 'invoice')
+								{
+									include 'mode/'.$mode.'.php';
+								}
 							}
 							?>
 				</div>

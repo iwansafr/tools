@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>esftgreat - Invoice #871068</title>
+	<title>esftgreat - Invoice #<?php echo time(); ?></title>
 	<link href="all.min.css" rel="stylesheet">
 	<link href="invoice.css" rel="stylesheet">
 </head>
@@ -11,11 +11,16 @@
 			<div class="row invoice-header">
 				<div class="invoice-col">
 					<p><img src="logo.png" title="esoftgreat"></p>
-					<h3>Invoice #871068</h3>
+					<h3>Invoice #<?php echo time(); ?></h3>
 				</div>
-				<div class="invoice-col text-center">
-					<div class="invoice-status">
-						<span class="paid">Paid</span>
+				<?php
+
+				$style = ($_POST['status'] == 'PAID') ? 'color : green;' : 'color: red';
+				$color = ($_POST['status'] == 'PAID') ? 'green' : 'red';
+				?>
+				<div class="invoice-col ">
+					<div class="invoice-status" style="border : <?php echo $color ?> solid 1px; text-align: center;">
+						<span style="<?php echo $style ?>"><?php echo $_POST['status'] ?></span>
 					</div>
 				</div>
 			</div>
@@ -24,13 +29,9 @@
 				<div class="invoice-col right">
 					<strong>Pay To</strong>
 					<address class="small-text">
-						esoftgreat<br><br>
-						NPWP : 02.670.337.1-609.000<br>
-						No. PKP : PEM-03187/WPJ.11/KP.0703/2013<br>
-						Tgl. Pengukuhan : 17 Desember 2013<br>
-						<br>
+						esoftgreat<br>
 						Alamat : <br>
-						Jl. Tulakan Km 01<br>
+						Jl. Tulakan Km 01,
 						Donorojo Jepara <br>
 						Telp : 08540510460 / 085290335332
 					</address>
@@ -38,12 +39,7 @@
 				<div class="invoice-col">
 					<strong>Invoiced To</strong>
 					<address class="small-text">
-						SMKN 1 BANGSRI<br>
-						<!-- iwan safrudin<br> -->
-						Jl. KH Achmad Fauzan,<br>
-						No. 17 Bangsri Jepara<br>
-						Telp: ( 0291 ) 772321<br>
-						Indonesia<br><br>
+						<?php echo $_POST['invoice_to'] ?>
 					</address>
 				</div>
 			</div>
@@ -58,7 +54,7 @@
 				<div class="invoice-col">
 					<strong>Invoice Date</strong><br>
 					<span class="small-text">
-						08/10/2018<br><br>
+						<?php echo date('d/m/Y') ?><br><br>
 					</span>
 				</div>
 			</div>
@@ -68,15 +64,7 @@
 				<h3 class="panel-title"><strong>Notes</strong></h3>
 			</div>
 			<div class="panel-body">
-				#1<br>
-				TRSF E-BANKING CR <br>
-				0310/FTSCY/WS95011<br>
- 				785784.00<br>
-				vps esoftgreat <br>
-				IWAN SAFRUDIN <br>
-				<br>
-				1.500.000.00<br>
- 				By System Administrator
+				<?php echo $_POST['notes'] ?>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -89,42 +77,53 @@
 						<thead>
 							<tr>
 								<td><strong>Description</strong></td>
-								<td width="20%" class="text-center"><strong>Amount</strong></td>
+								<td width="25%" class=""><strong>Amount</strong></td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									VPS DevOps<br>
-									Amount: 714240 x Pts Rp. 1,00  *
-								</td>
-								<td class="text-center">
-									Rp. 714.240,00
-								</td>
-							</tr>
-							<tr>
-								<td>Kode Unik</td>
-								<td class="text-center">Rp. 120,00 </td>
-							</tr>
-							<tr>
-								<td>Create VPS Devops [SECENG] (server.esoftgreat.com) Disk : 15 GB, Memory : 512 MB, Cores : 1, Combat Power : Research for 360 Days</td>
-								<td class="text-center">Rp. 0,00 </td>
-							</tr>
+							<?php
+							$items = $_POST['items'];
+							$items = explode(',',$items);
+							$each_item = array();
+							$sub_total = 0;
+							foreach ($items as $key => $value)
+							{
+								$value = explode('=', $value);
+								$each_item[$value[0]] = (int) $value[1];
+							}
+							foreach ($each_item as $key => $value)
+							{
+								?>
+								<tr>
+									<td>
+										<?php echo $key ?>
+									</td>
+									<td class="">
+										<?php echo 'Rp. '.number_format($value, 2, ',', '.'); ?>
+									</td>
+								</tr>
+								<?php
+								$sub_total += $value;
+							}
+							$ppn = ($sub_total*10)/100;
+							$total = $sub_total+$ppn;
+							?>
+
 							<tr>
 								<td class="total-row text-right"><strong>Sub Total</strong></td>
-								<td class="total-row text-center">Rp. 714.360,00 </td>
+								<td class="total-row "><?php echo 'Rp. '.number_format($sub_total, 2, ',', '.'); ?></td>
 							</tr>
 							<tr>
 								<td class="total-row text-right"><strong>10.00% PPN</strong></td>
-								<td class="total-row text-center">Rp. 71.424,00 </td>
+								<td class="total-row "><?php echo 'Rp. '.number_format($ppn, 2, ',', '.'); ?></td>
 							</tr>
 							<tr>
 								<td class="total-row text-right"><strong>Credit</strong></td>
-								<td class="total-row text-center">Rp. 0,00 </td>
+								<td class="total-row ">Rp. 0,00 </td>
 							</tr>
 							<tr>
 								<td class="total-row text-right"><strong>Total</strong></td>
-								<td class="total-row text-center">Rp. 785.784,00 </td>
+								<td class="total-row "><?php echo 'Rp. '.number_format($total, 2, ',', '.'); ?></td>
 							</tr>
 						</tbody>
 					</table>
@@ -137,22 +136,22 @@
 				<table class="table table-condensed">
 					<thead>
 						<tr>
-							<td class="text-center"><strong>Transaction Date</strong></td>
-							<td class="text-center"><strong>Gateway</strong></td>
-							<td class="text-center"><strong>Transaction ID</strong></td>
-							<td class="text-center"><strong>Amount</strong></td>
+							<td class=""><strong>Transaction Date</strong></td>
+							<td class=""><strong>Gateway</strong></td>
+							<td class=""><strong>Transaction ID</strong></td>
+							<td class=""><strong>Amount</strong></td>
 						</tr>
 					</thead>
 					<tbody>
 														<tr>
-								<td class="text-center">03/10/2018</td>
-								<td class="text-center">Transfer ke Bank BCA</td>
-								<td class="text-center">BCA-8080-794045</td>
-								<td class="text-center">Rp. 785.784,00 </td>
+								<td class=""><?php echo date('d/m/Y') ?></td>
+								<td class="">Transfer ke Bank BCA</td>
+								<td class="">BCA-<?php echo substr(time(), 0,4).'-'.substr(time(), 5,8) ?></td>
+								<td class=""><?php echo 'Rp. '.number_format($total, 2, ',', '.'); ?></td>
 							</tr>
 													<tr>
 							<td class="text-right" colspan="3"><strong>Balance</strong></td>
-							<td class="text-center">Rp. 0,00 </td>
+							<td class="">Rp. 0,00 </td>
 						</tr>
 					</tbody>
 				</table>
@@ -163,6 +162,6 @@
 			<!-- <a href="dl.php?type=i&amp;id=871068" class="btn btn-default"><i class="fa fa-download"></i> Download</a> -->
 		</div>
 	</div>
-	<!-- <p class="text-center hidden-print"><a href="clientarea.php">« Back to Client Area</a></p> -->
+	<!-- <p class=" hidden-print"><a href="clientarea.php">« Back to Client Area</a></p> -->
 </body>
 </html>
