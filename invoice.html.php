@@ -17,11 +17,13 @@
 
 				$style = ($_POST['status'] == 'PAID') ? 'color : green;' : 'color: red';
 				$color = ($_POST['status'] == 'PAID') ? 'green' : 'red';
+				$img   = ($_POST['status'] == 'PAID') ? 'paid.png' : 'unpaid.png';
 				?>
-				<div class="invoice-col ">
-					<div class="invoice-status" style="border : <?php echo $color ?> solid 1px; text-align: center;">
+				<div class="invoice-col " style="margin-top: 2%; padding-left: 140px;">
+					<!-- <div class="invoice-status" style="border : <?php echo $color ?> solid 1px; text-align: center;">
 						<span style="<?php echo $style ?>"><?php echo $_POST['status'] ?></span>
-					</div>
+					</div> -->
+					<img src="<?php echo $img ?>" style="margin-lef: 100px;transform :rotate(30deg); height: 50px; height: 60px; width: 230px;">
 				</div>
 			</div>
 			<hr>
