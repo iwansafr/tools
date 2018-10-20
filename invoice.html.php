@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>esftgreat - Invoice #<?php echo time(); ?></title>
+	<title>esftgreat - Invoice #<?php echo !empty($_POST['id']) ? $_POST['id'] : time(); ?></title>
 	<link href="all.min.css" rel="stylesheet">
 	<link href="invoice.css" rel="stylesheet">
 </head>
@@ -11,10 +11,9 @@
 			<div class="row invoice-header">
 				<div class="invoice-col">
 					<p><img src="logo.png" title="esoftgreat"></p>
-					<h3>Invoice #<?php echo time(); ?></h3>
+					<h3>Invoice #<?php echo !empty($_POST['id']) ? $_POST['id'] : time(); ?></h3>
 				</div>
 				<?php
-
 				$style = ($_POST['status'] == 'PAID') ? 'color : green;' : 'color: red';
 				$color = ($_POST['status'] == 'PAID') ? 'green' : 'red';
 				$img   = ($_POST['status'] == 'PAID') ? 'paid.png' : 'unpaid.png';
@@ -49,7 +48,7 @@
 				<div class="invoice-col right">
 					<strong>Payment Method</strong><br>
 					<span class="small-text">
-						Transfer ke Bank BCA
+						<?php echo $_POST['payment_method'] ?>
 					</span>
 					<br><br>
 				</div>
@@ -107,18 +106,29 @@
 								<?php
 								$sub_total += $value;
 							}
-							$ppn = ($sub_total*10)/100;
-							$total = $sub_total+$ppn;
+							if(!empty($_POST['ppn']))
+							{
+								$ppn = ($sub_total*10)/100;
+								$total = $sub_total+$ppn;
+							}else{
+								$total = $sub_total;
+							}
 							?>
 
 							<tr>
 								<td class="total-row text-right"><strong>Sub Total</strong></td>
 								<td class="total-row "><?php echo 'Rp. '.number_format($sub_total, 2, ',', '.'); ?></td>
 							</tr>
-							<tr>
-								<td class="total-row text-right"><strong>10.00% PPN</strong></td>
-								<td class="total-row "><?php echo 'Rp. '.number_format($ppn, 2, ',', '.'); ?></td>
-							</tr>
+							<?php
+							if(!empty($ppn))
+							{
+								?>
+								<tr>
+									<td class="total-row text-right"><strong>10.00% PPN</strong></td>
+									<td class="total-row "><?php echo 'Rp. '.number_format($ppn, 2, ',', '.'); ?></td>
+								</tr>
+								<?php
+							}?>
 							<tr>
 								<td class="total-row text-right"><strong>Credit</strong></td>
 								<td class="total-row ">Rp. 0,00 </td>

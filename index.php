@@ -25,6 +25,9 @@
 		include 'config.php';
 
 		?>
+		<center style="background: blue;color: white;padding: 0.5%;">
+			<h1>esoftgreat tools</h1>
+		</center>
 		<hr>
 		<div class="row">
 			<div class="col-md-12">
@@ -98,6 +101,8 @@
 								{
 									?>
 									<div class="col-md-12">
+										<label class="danger">Invoice Code</label>
+										<input type="text" name="id" placeholder="kode invoice" class="form-control">
 										<label>invoice To</label>
 										<textarea required="" class="form-control" name="invoice_to" rows="4" ></textarea>
 										<label>payment method</label>
@@ -113,6 +118,11 @@
 										<select class="form-control" name="status">
 											<option value="PAID">PAID</option>
 											<option value="UNPAID">UNPAID</option>
+										</select>
+										<label>give ppn ?</label>
+										<select class="form-control" name="ppn">
+											<option value="1">Yes</option>
+											<option value="0">No</option>
 										</select>
 										<br>
 									</div>
@@ -147,6 +157,9 @@
 							</div>
 							<br>
 							<input type="submit" name="" class="btn btn-success" value="submit">
+							<div class="clearfix"></div>
+							<br>
+							<hr>
 						</form>
 							<?php
 							if(!empty($_POST))
