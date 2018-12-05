@@ -1,17 +1,26 @@
 <style type="text/css">
-	#text{
+	/*#text{
 		background: yellow;
-	}
+	}*/
 </style>
 <?php
+$code = encrypt($_POST['code']);
 echo '<br>';
-echo '<mark id="text">';
-echo encrypt($_POST['code']);
-echo '</mark>';
+echo '<input id="text" value="'.$code.'" readonly style="width: 100%;">';
 echo "\n";
-// echo '<button id="copy">copy</button>';
 ?>
+<button onclick="copy()">copy to clipboard</button>
 <script type="text/javascript">
+	function copy()
+	{
+		var a = document.getElementById('text');
+		// console.log(a);
+		a.select();
+		document.getSelection();
+		document.execCommand('copy');
+		// document.getSelection();
+		// document.execCommand('copy');
+	}
 	// document.getElementById('copy').addEventListener('click', function(e){
 	// 	var a = document.getElementById('text').innerHTML;
 	// 	// e.clipboardData.setData('text/plain', a);

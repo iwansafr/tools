@@ -157,8 +157,8 @@
 					<tbody>
 														<tr>
 								<td class=""><?php echo date('d/m/Y') ?></td>
-								<td class="">Transfer ke Bank BCA</td>
-								<td class="">BCA-<?php echo substr(time(), 0,4).'-'.substr(time(), 5,8) ?></td>
+								<td class=""><?php echo $_POST['payment_method'];?></td>
+								<td class=""><?php echo ($_POST['payment_method'] == 'cash') ? 'CASH' : 'BCA'; ?>-<?php echo substr(time(), 0,4).'-'.substr(time(), 5,8) ?></td>
 								<td class=""><?php echo 'Rp. '.number_format($total, 2, ',', '.'); ?></td>
 							</tr>
 													<tr>
