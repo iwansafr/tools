@@ -2,11 +2,11 @@
 <html>
 <head>
 	<title></title>
-	<link href="<?php echo 'http://localhost/esoftgreat/templates/admin/'; ?>css/bootstrap.min.css" rel="stylesheet">
-	<link href="<?php echo 'http://localhost/esoftgreat/templates/admin/'; ?>font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo 'http://localhost/esg/templates/AdminLTE/assets/bootstrap/'; ?>css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo 'http://localhost/esg/templates/AdminLTE/assets/'; ?>font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<!-- <link href="style.css" rel="stylesheet"> -->
 	<!-- <script src="//cdn.ckeditor.com/4.5.5/standard/ckeditor.js"></script> -->
-	<!-- <script src="<?php echo 'http://localhost/esoftgreat/templates/admin/'; ?>js/plugins/ckeditor/ckeditor.js"></script> -->
+	<!-- <script src="<?php echo 'http://localhost/esg/templates/AdminLTE/assets/bootstrap/'; ?>js/plugins/ckeditor/ckeditor.js"></script> -->
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -203,8 +203,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="<?php echo 'http://localhost/esoftgreat/templates/admin/'; ?>js/jquery.js"></script>
-	<script src="<?php echo 'http://localhost/esoftgreat/templates/admin/'; ?>js/bootstrap.min.js"></script>
+	<script src="<?php echo 'http://localhost/esg/templates/AdminLTE/assets/jquery/'; ?>jquery.min.js"></script>
+	<script src="<?php echo 'http://localhost/esg/templates/AdminLTE/assets/bootstrap/'; ?>js/bootstrap.min.js"></script>
 	<script src="codemirror/lib/codemirror.js"></script>
 	<!-- <script src="codemirror/mode/htmlmixed/htmlmixed.js"></script> -->
 	<script src="codemirror.js"></script>

@@ -1,7 +1,7 @@
 <?php
 $config = array(
 	'url' => 'http://localhost/tools/',
-	'db'  => 'esoftgreat',
+	'db'  => 'esg',
 	'host' => 'localhost',
 	'user_db' => 'root',
 	'pass_db' => 'toor'
