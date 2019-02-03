@@ -10,7 +10,7 @@
 	<div class="container-fluid invoice-container">
 			<div class="row invoice-header">
 				<div class="invoice-col">
-					<p><img src="logo.png" title="esoftgreat"></p>
+					<p><img src="logo.png" title="esoftgreat" width="350"></p>
 					<h3>Invoice #<?php echo !empty($_POST['id']) ? $_POST['id'] : time(); ?></h3>
 				</div>
 				<?php
@@ -34,7 +34,7 @@
 						Alamat : <br>
 						Jl. Tulakan Km 01,
 						Donorojo Jepara <br>
-						Telp : 08540510460 / 085290335332
+						Telp : 085758700025 / 085290335332
 					</address>
 				</div>
 				<div class="invoice-col">
@@ -50,13 +50,22 @@
 					<span class="small-text">
 						<?php echo $_POST['payment_method'] ?>
 					</span>
-					<br><br>
 				</div>
 				<div class="invoice-col">
 					<strong>Invoice Date</strong><br>
 					<span class="small-text">
 						<?php echo date('d/m/Y') ?><br><br>
 					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="invoice-col right">
+					<strong>Bank Detail</strong><br>
+					<span class="small-text">
+						No Rek 	: <br>0312609779 <br>
+						A/N 		: <br>Iwan Safrudin
+					</span>
+					<br><br>
 				</div>
 			</div>
 			<br>

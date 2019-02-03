@@ -40,6 +40,7 @@
 	          <a href="<?php echo site_url().'?mode=generate_user' ?>" class="list-group-item">Generate User</a>
 	          <a href="<?php echo site_url().'?mode=filter' ?>" class="list-group-item">Filter</a>
 	          <a href="<?php echo site_url().'?mode=copy' ?>" class="list-group-item">copy</a>
+	          <a href="<?php echo site_url().'?mode=compressor' ?>" class="list-group-item">compressor</a>
 	          <a href="<?php echo site_url().'?mode=invoice' ?>" class="list-group-item">invoice</a>
 	        </div>
 				</div>
@@ -97,7 +98,16 @@
 									</div>
 									<div class="clearfix"></div>
 									<?php
-								}else if(@$_GET['mode'] == 'invoice')
+								}else if(@$_GET['mode'] == 'compressor'){
+									?>
+									<div class="col-md-12">
+										<label>Referensi</label>
+										<textarea required="" class="form-control" name="code" rows="7" style="color: green;"><?php echo @$code ?></textarea>
+									</div>
+									<?php
+
+								}
+								else if(@$_GET['mode'] == 'invoice')
 								{
 									?>
 									<div class="col-md-12">
@@ -188,6 +198,9 @@
 										break;
 									case 'invoice':
 										$mode = 'invoice';
+										break;
+									case 'compressor':
+										$mode = 'compressor';
 										break;
 									default:
 										$mode = 'php';
