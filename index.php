@@ -41,6 +41,7 @@
 	          <a href="<?php echo site_url().'?mode=filter' ?>" class="list-group-item">Filter</a>
 	          <a href="<?php echo site_url().'?mode=copy' ?>" class="list-group-item">copy</a>
 	          <a href="<?php echo site_url().'?mode=compressor' ?>" class="list-group-item">compressor</a>
+	          <a href="<?php echo site_url().'?mode=csv2json' ?>" class="list-group-item">csv to json</a>
 	          <a href="<?php echo site_url().'?mode=invoice' ?>" class="list-group-item">invoice</a>
 	        </div>
 				</div>
@@ -103,6 +104,16 @@
 									<div class="col-md-12">
 										<label>Referensi</label>
 										<textarea required="" class="form-control" name="code" rows="7" style="color: green;"><?php echo @$code ?></textarea>
+									</div>
+									<?php
+
+								}else if(@$_GET['mode'] == 'csv2json'){
+									?>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>CSV</label>
+											<textarea required="" class="form-control" name="code" rows="7" style="color: green;"><?php echo @$code ?></textarea>
+										</div>
 									</div>
 									<?php
 
@@ -202,6 +213,9 @@
 									case 'compressor':
 										$mode = 'compressor';
 										break;
+									case 'csv2json':
+										$mode = 'csv2json';
+										break;	
 									default:
 										$mode = 'php';
 										break;
