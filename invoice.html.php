@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>esftgreat - Invoice #<?php echo !empty($_POST['id']) ? $_POST['id'] : time(); ?></title>
+	<title>esoftgreat - Invoice #<?php echo !empty($_POST['id']) ? $_POST['id'] : time(); ?></title>
 	<link href="all.min.css" rel="stylesheet">
 	<link href="invoice.css" rel="stylesheet">
 </head>
@@ -34,7 +34,8 @@
 						Alamat : <br>
 						Jl. Tulakan Km 01,
 						Donorojo Jepara <br>
-						Telp : 085758700025 / 085290335332
+						Telp : 085758700025 / 085290335332 <Br>
+						Email : iwansafr@gmail.com / iwan@esoftgreat.com
 					</address>
 				</div>
 				<div class="invoice-col">
