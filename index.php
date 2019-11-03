@@ -43,6 +43,7 @@
 	          <a href="<?php echo site_url().'?mode=compressor' ?>" class="list-group-item">compressor</a>
 	          <a href="<?php echo site_url().'?mode=csv2json' ?>" class="list-group-item">csv to json</a>
 	          <a href="<?php echo site_url().'?mode=invoice' ?>" class="list-group-item">invoice</a>
+	          <a href="<?php echo site_url().'?mode=phpinfo' ?>" class="list-group-item">php info</a>
 	        </div>
 				</div>
 				<div class="col-md-10">
@@ -148,6 +149,8 @@
 										<br>
 									</div>
 									<?php
+								}else if(@$_GET['mode'] == 'phpinfo'){
+									phpinfo();
 								}else{
 									if(@$_GET['mode'] == 'generate_user')
 									{
@@ -215,6 +218,9 @@
 										break;
 									case 'csv2json':
 										$mode = 'csv2json';
+										break;
+									case 'phpinfo':
+										$mode ='phpinfo';
 										break;	
 									default:
 										$mode = 'php';
