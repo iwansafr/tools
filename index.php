@@ -44,6 +44,20 @@
 	          <a href="<?php echo site_url().'?mode=csv2json' ?>" class="list-group-item">csv to json</a>
 	          <a href="<?php echo site_url().'?mode=invoice' ?>" class="list-group-item">invoice</a>
 	          <a href="<?php echo site_url().'?mode=phpinfo' ?>" class="list-group-item">php info</a>
+	          <?php 
+	          $app_path = glob('/var/www/html/tools/app/*.php');
+	          if(!empty($app_path))
+	          {
+	          	foreach ($app_path as $key => $value) 
+	          	{
+	          		$title = explode('/', $value);
+								$title = end($title);
+								$title = str_replace('.php', '', $title);
+	          		echo '<a href="http://localhost/tools/?mode='.$title.'" class="list-group-item">'.$title.'</a>';
+	          	}
+	          }
+	          ?>
+
 	        </div>
 				</div>
 				<div class="col-md-10">
@@ -170,7 +184,23 @@
 										<br>
 										<?php
 									}
-									?>
+									if(!empty($app_path))
+				          {
+				          	if(!empty($_GET['mode']))
+				          	{
+					          	foreach ($app_path as $key => $value) 
+					          	{
+					          		$title = explode('/', $value);
+												$title = end($title);
+												$title = str_replace('.php', '', $title);
+				          			if($_GET['mode'] == $title)
+				          			{
+				          				include 'app/'.$title.'.php';
+				          			}
+					          	}
+				          	}
+				          }
+				          ?>
 									<div class="col-md-12">
 										<textarea id="my_code" class="form-control" name="code" rows="7" style="color: green;"><?php echo $code ?></textarea>
 									</div>
