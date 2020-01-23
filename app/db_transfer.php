@@ -1,7 +1,7 @@
 <div class="col-md-12">
 	<div class="col-md-6">
 		<h5>db 1</h5>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<input type="text" placeholder="hostname" name="host1" value="<?php echo @$_POST['host1']?>" class="form-control">
 		</div>
 		<div class="form-group">
@@ -9,7 +9,7 @@
 		</div>
 		<div class="form-group">
 			<input type="password" placeholder="password" name="password1" value="<?php echo @$_POST['pasword1']?>" class="form-control">
-		</div>
+		</div> -->
 		<div class="form-group">
 			<input type="text" placeholder="db name" name="db1" value="<?php echo @$_POST['db1']?>" class="form-control">
 		</div>
@@ -19,7 +19,7 @@
 	</div>
 	<div class="col-md-6">
 		<h5>db 2</h5>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<input type="text" placeholder="hostname" name="host2" value="<?php echo @$_POST['host2']?>" class="form-control">
 		</div>
 		<div class="form-group">
@@ -27,7 +27,7 @@
 		</div>
 		<div class="form-group">
 			<input type="password" placeholder="password" name="password2" value="<?php echo @$_POST['password2']?>" class="form-control">
-		</div>
+		</div> -->
 		<div class="form-group">
 			<input type="text" placeholder="db name" name="db2" value="<?php echo @$_POST['db2']?>" class="form-control">
 		</div>
@@ -38,70 +38,112 @@
 </div>
 
 <?php
-if(!empty($_POST))
+function process($process_input = array())
 {
-	$db1 = new mysqli($_POST['host1'],$_POST['username1'],$_POST['password1'],$_POST['db1']);
-	if(empty($db1->error))
+	$host = 'localhost';
+	$username = 'root';
+	$password = 'toor';
+	if(!empty($process_input))
 	{
-		$page = @intval($_GET['page'])
-		$result = $db1->query('SELECT * FROM '.$_POST['tb1'].' LIMIT ');
-		$data = [];
-		$data['fields'] = $result->fetch_fields();
-		$data['total'] = $result->num_rows;
-		// while($row = $result->fetch_assoc())
-		// {
-		// 	$data['data'][] = $row;
-		// }
-		pr($data['data']);die();
-		if(!empty($data['data']))
+		$db1 = new mysqli($host,$username,$password,@$process_input['db1']);
+		if(empty($db1->errno))
 		{
-			$db2 = new mysqli($_POST['host2'],$_POST['username2'],$_POST['password2'],$_POST['db2']);
-			if(empty($db2->error))
+			$page = @intval($_GET['page']);
+			$result = $db1->query('SELECT * FROM '.@$process_input['tb1']);
+			if(!empty($result))
 			{
-				$fields = [];
-				foreach ($data['fields'] as $key => $value) 
+				$data = [];
+				$data['fields'] = $result->fetch_fields();
+				$data['total'] = $result->num_rows;
+				$limit = 100;
+				$page = empty($page) ? 0 : $page*$limit;
+				$result = $db1->query('SELECT * FROM '.$process_input['tb1'].' LIMIT '.$page.','.$limit);
+				while($row = $result->fetch_assoc())
 				{
-					$fields[] = $value->name;
+					$data['data'][] = $row;
 				}
-				if(!empty($fields))
+				if(!empty($data['data']))
 				{
-					$fields = implode(',',$fields);
-					$fields = '('.$fields.')';
-				}
-				$sql = 'INSERT INTO '.$_POST['tb2'].$fields .' VALUES';
-				$tmp_sql = [];
-				foreach ($data['data'] as $key => $value) 
-				{
-					$values = [];
-					foreach ($data['fields'] as $fkey => $fvalue) 
+					$db2 = new mysqli($host,$username,$password,$process_input['db2']);
+					if(empty($db2->error))
 					{
-						if(is_numeric($value[$fvalue->name]))
+						$fields = [];
+						foreach ($data['fields'] as $key => $value) 
 						{
-							$values[] = $value[$fvalue->name];
-							// pr($value[$fvalue->name]);
-							// pr('angka');
-						}else{
-							// pr($value[$fvalue->name]);
-							// pr('bukan angka');
-							if(empty($value[$fvalue->name]))
-							{
-								$values[] = 'NULL';
-							}else{
-								$values[] = "'".$value[$fvalue->name]."'";
-							}
+							$fields[] = $value->name;
 						}
+						if(!empty($fields))
+						{
+							$fields = implode(',',$fields);
+							$fields = '('.$fields.')';
+						}
+						$sql = 'INSERT INTO '.$process_input['tb2'].$fields .' VALUES';
+						$tmp_sql = [];
+						foreach ($data['data'] as $key => $value) 
+						{
+							$values = [];
+							foreach ($data['fields'] as $fkey => $fvalue) 
+							{
+								if(is_numeric($value[$fvalue->name]))
+								{
+									$values[] = $value[$fvalue->name];
+									// pr($value[$fvalue->name]);
+									// pr('angka');
+								}else{
+									// pr($value[$fvalue->name]);
+									// pr('bukan angka');
+									if(empty($value[$fvalue->name]))
+									{
+										$values[] = 'NULL';
+									}else{
+										$value[$fvalue->name] = $db2->real_escape_string($value[$fvalue->name]);
+										$values[] = "'".$value[$fvalue->name]."'";
+									}
+								}
+							}
+							$values = implode(",",$values);
+							$values = "(".$values.")";
+							$tmp_sql[] = $values;
+						}
+						$tmp_sql = implode(",",$tmp_sql);
+						$sql .= $tmp_sql;
+						pr($sql);
+						$result = $db2->query($sql);
+						if(empty($result))
+						{
+							pr('failed');die();
+						}
+						pr($result);
+						$page             = @intval($_GET['page'])+1;
+						$form_get         = $process_input;
+						$form_get['page'] = $page;
+						$get_url          = [];
+
+						foreach ($form_get as $key => $value)
+						{
+							$get_url[] = $key.'='.$value;
+						}
+						$get_url = implode('&', $get_url);
+						$url = 'http://localhost/tools?mode=db_transfer&'.$get_url;
+						?>
+						<script type="text/javascript">
+							setTimeout(function(){ 
+								location.href = "<?php echo $url?>";
+							}, 10);
+						</script>
+						<?php
 					}
-					$values = implode(",",$values);
-					$values = "(".$values.")";
-					$tmp_sql[] = $values;
 				}
-				$tmp_sql = implode(",",$tmp_sql);
-				$sql .= $tmp_sql;
-				pr($sql);
-				$result = $db2->query($sql);
-				pr($result);
-			}			
+			}
 		}
 	}
+}
+if(!empty($_POST))
+{
+	process($_POST);
+}
+if(!empty($_GET))
+{
+	process($_GET);
 }
 ?>
