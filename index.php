@@ -201,9 +201,6 @@
 				          	}
 				          }
 				          ?>
-									<div class="col-md-12">
-										<textarea id="my_code" class="form-control" name="code" rows="7" style="color: green;"><?php echo $code ?></textarea>
-									</div>
 									<div class="clearfix"></div>
 									<?php
 								}
